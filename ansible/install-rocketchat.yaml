@@ -1,0 +1,13 @@
+---
+- name: Installing rocketchat
+- hosts: rocketchat
+  become: true
+  
+  tasks:
+    - name: Pull rocket.chat, NGINX, MongoDB from dockerhub
+    
+    - name: Create config for NGINX
+    
+    # Run as separate containers or make compose file?
+    
+    
