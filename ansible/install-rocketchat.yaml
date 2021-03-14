@@ -4,9 +4,19 @@
   become: true
   
   tasks:
-    - name: Pull rocket.chat, NGINX, MongoDB from dockerhub
+    - name: Pull rocket.chat, NGINX, MongoDB, nginx-proxy-companion from dockerhub
     
     - name: Create config for NGINX
+    
+    - name: Create config for letsencrypt-companion
+    
+    - name: Run MongoDB with all the needed stuff
+    
+    - name: Run nginx-proxy-companion with all neded stuff
+    
+    - name: Run NGINX with all the needed stuff
+    
+    - name: Run Rocket.Chat with all the needed stuff
     
     # Run as separate containers or make compose file?
     
