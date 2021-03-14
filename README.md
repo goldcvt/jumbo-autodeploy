@@ -1,1 +1,1 @@
-# jumbo-k8s
+# jumbo-autodeploy
