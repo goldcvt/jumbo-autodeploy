@@ -58,7 +58,7 @@
         published_ports: [[ "80:80", "443:443" ]]
         
     
-    # Use fs mount instead of volume fro conf. We'll need to modify the config every time we start another instance of rocket.chat
+    # Use fs mount instead of volume for conf. We'll need to modify the config every time we start another instance of rocket.chat
     - name: Run nginx-proxy-companion with all of the needed stuff
       docker_container:
         state: present
@@ -70,10 +70,9 @@
         volumes_from: [[ "proxy" ]]
         volumes: [[ "/var/run/docker.sock:/var/run/docker.sock:ro", "acme:/etc/acme.sh" ]]
         
-    # TODO manage Replication/High Availiability
     - name: Run MongoDB with all of the needed stuff
+      # doing the stuff, deploying mongodb-master node
     - import_playbook: setup-mongos.yaml
-      # 
     
     # TODO how to connect to remote MongoDB servers?? Should we?
     - name: Run (x) Rocket.Chats with all of the needed stuff
