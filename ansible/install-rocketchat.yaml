@@ -15,26 +15,26 @@
       # Use normal NGINX image w/ le-proxy-companion?
       loop: [[ "rocketchat/rocket.chat:{{ rocketchat_tag }}", "mongo:{{ mongo_tag }}", "jwilder/nginx-proxy:{{ jwilder_nginx_tag }}", "jrcs/letsencrypt-nginx-proxy-companion:{{ le_companion_tag }}" ]]
     
-    - name: Create directory for NGINX configs
-      file:
-        path: ~/nginx-config
-        state: directory
-        mode: '0775'
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+#    - name: Create directory for NGINX configs
+#      file:
+#        path: ~/nginx-config
+#        state: directory
+#        mode: '0775'
+#        owner: "{{ ansible_user }}"
+#        group: "{{ ansible_user }}"
     
     # Use variable for domain name and template for config. IP can be retrieved via ansible variable
-    - name: Create config for NGINX
-      template:
-        src: config-templates/rocketchat-nginx.conf.j2
-        dest: ~/nginx-config/nginx.conf
-        owner: root
-        group: root
-        mode: '0644'
+#    - name: Create config for NGINX
+#      template:
+#        src: config-templates/rocketchat-nginx.conf.j2
+#        dest: ~/nginx-config/nginx.conf
+#        owner: root
+#        group: root
+#        mode: '0644'
     
-    - name: Create config for letsencrypt-companion
+#    - name: Create config for letsencrypt-companion
     
-    - name: Create networks
+    - name: Create network
     
     - name: Run nginx-proxy-companion with all of the needed stuff
     
