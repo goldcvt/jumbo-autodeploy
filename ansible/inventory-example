@@ -1,0 +1,17 @@
+[rocketchat]
+
+[rocketchat:mongo]
+
+[rocketchat:app]
+
+[jitsi]
+
+[jitsi:web]
+
+[jitsi:jvb]
+
+[nextcloud]
+
+[nextcloud:maria]
+
+[nextcloud:redis]
