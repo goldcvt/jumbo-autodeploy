@@ -82,9 +82,9 @@
         name: "rocketchat_{{ count }}"
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         env:
-          VIRTUAL_HOST: "{{ domain | mandatory }}"
+          VIRTUAL_HOST: "chat.{{ domain | mandatory }}"
           VIRTUAL_PORT: "{{ count +3000 }}"
-          LETSENCRYPT_HOST: "{{ domain | mandatory }}"
+          LETSENCRYPT_HOST: "chat.{{ domain | mandatory }}"
         detach: yes
         networks: 
           - name: db-net
