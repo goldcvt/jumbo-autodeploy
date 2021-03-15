@@ -20,7 +20,9 @@
         state: present
         name: "MongoDB-slave"
         image: "mongo:{{ mongo_tag }}"
-        volumes: [[ "/home/core/mongo-files/data:/data/db", "/home/core/mongo-files:/opt/keyfile" ]]
+        volumes: 
+          - /home/core/mongo-files/data:/data/db
+          - /home/core/mongo-files:/opt/keyfile
         hostname: "mongo{{ count }}.{{ domain | mandatory }}" # TODO fix
         etc_hosts:
           mongo1.{{ domain | mandatory }}: ?????
