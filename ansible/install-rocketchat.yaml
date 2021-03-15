@@ -52,10 +52,16 @@
         # env: 
         image: "jwilder/nginx-proxy:{{ jwilder_nginx_tag }}"
         detach: yes
-        volumes: [[ "/var/run/docker.sock:/tmp/docker.sock:ro", "certs:/etc/nginx/certs:ro", "vhost:/etc/nginx/vhost.d", "webroot:/usr/share/nginx/html" ]]
+        volumes: 
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+          - certs:/etc/nginx/certs:ro 
+          - vhost:/etc/nginx/vhost.d
+          - webroot:/usr/share/nginx/html
         #networks:
         #  - name: proxy-net
-        published_ports: [[ "80:80", "443:443" ]]
+        published_ports:
+          - "80:80"
+          - "443:443"
         
     
     # Use fs mount instead of volume for conf. We'll need to modify the config every time we start another instance of rocket.chat
@@ -68,7 +74,9 @@
           DEFAULT_EMAIL: "{{ le_email | mandatory }}"
         detach: yes
         volumes_from: [[ "proxy" ]]
-        volumes: [[ "/var/run/docker.sock:/var/run/docker.sock:ro", "acme:/etc/acme.sh" ]]
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock:ro
+          - acme:/etc/acme.sh
         
     - name: Run MongoDB with all of the needed stuff
       # doing the stuff, deploying mongodb-master node
