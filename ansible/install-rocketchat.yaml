@@ -5,19 +5,26 @@
   
   tasks:
     - name: Pull rocket.chat, NGINX, MongoDB, nginx-proxy-companion from dockerhub
+      docker-image: 
+        name: "{{ item }}"
+        source: pull
+        pull:
+          platform: amd64
+      loop: [[ "rocketchat/rocket.chat:latest", "mongo:4.0", "jwilder/nginx-proxy:latest", "jrcs/letsencrypt-nginx-proxy-companion:2.0" ]]
     
     - name: Create config for NGINX
     
     - name: Create config for letsencrypt-companion
     
-    - name: Run MongoDB with all the needed stuff
+    - name: Create networks
     
     - name: Run nginx-proxy-companion with all neded stuff
     
     - name: Run NGINX with all the needed stuff
     
+    - name: Run MongoDB with all the needed stuff
+    
     - name: Run Rocket.Chat with all the needed stuff
     
     # Run as separate containers or make compose file?
-    
     
