@@ -50,12 +50,12 @@
           MONGO_INITDB_DATABASE: "{{ MONGO_INITDB_DATABASE }}"
         volumes:
           - /home/coro/mongo-files/data:/data/db
-          - /home/coro:/opt/keyfile
+        #  - /home/coro:/opt/keyfile
           - /home/coro/mongo-startup.sh:/docker-entrypoint-initdb.d/init-mongo.sh
         exposed_ports:
           - "27017:27017"
         detach: yes
-        command: --smallfiles --oplogSize 128 --auth # --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
+        command: --smallfiles --oplogSize 128 --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0" # --auth
         networks:
           - name: db-net
         purge_networks: yes
