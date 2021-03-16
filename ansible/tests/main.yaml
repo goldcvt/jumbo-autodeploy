@@ -29,7 +29,7 @@
         exposed_ports:
           - "27017:27017"
         detach: yes
-        command: --smallFiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
+        command: mongod --smallfiles --oplogSize 128 --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
         networks:
           - name: db-net
       
