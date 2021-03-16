@@ -36,8 +36,9 @@
         image: "mongo:4.0"
         hostname: "mongo1.mongo-cluster"
         env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: p4ssw0rd
+          MONGO_INITDB_ROOT_USERNAME: "root"
+          MONGO_INITDB_ROOT_PASSWORD: "password"
+          MONGO_INITDB_DATABASE: "admin"
         volumes:
           - /home/coro/mongo-files/data:/data/db
           - /home/coro:/opt/keyfile
