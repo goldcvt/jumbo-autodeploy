@@ -15,7 +15,8 @@
       docker_network:
         name: db-net
         attachable: yes
-
+      
+      # not running?
     - name: Init MongoDB master
       docker_container:
         state: present
