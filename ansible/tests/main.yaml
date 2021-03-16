@@ -40,24 +40,24 @@
         ansible_connection: docker
       changed_when: false
         
-    - name: Run a sample docker command
-      raw: ls
-      delegate_to: "MongoDB-master"
+#    - name: Run a sample docker command
+#      raw: ls
+#      delegate_to: "MongoDB-master"
       
-#    - name: Create admin user
-#      community.mongodb.mongodb_user:
-#        database: admin
-#        name: siteUserAdmin
-#        password: password #"{{ admin-password | mandatory }}"
-#        roles: userAdminAnyDatabase
-#        state: present
-#      delegate_to: "MongoDB-master"
+    - name: Create admin user
+      community.mongodb.mongodb_user:
+        database: admin
+        name: siteUserAdmin
+        password: password #"{{ admin-password | mandatory }}"
+        roles: userAdminAnyDatabase
+        state: present
+      delegate_to: "MongoDB-master"
 
-#    - name: Create root user
-#      community.mongodb.mongodb_user:
-#        database:
-#        name: siteRootAdmin
-#        password: p4ssw0rd #"{{ root-password | mandatory }}"
-#        roles: root
-#        state: present
-#      delegate_to: "MongoDB-master"
+    - name: Create root user
+      community.mongodb.mongodb_user:
+        database:
+        name: siteRootAdmin
+        password: p4ssw0rd #"{{ root-password | mandatory }}"
+        roles: root
+        state: present
+      delegate_to: "MongoDB-master"
