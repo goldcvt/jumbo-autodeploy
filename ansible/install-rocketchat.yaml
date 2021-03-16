@@ -2,7 +2,7 @@
 - hosts: rocketchat:app
   become: true
   vars_files:
-    - vars/installation-consts.yaml
+    - vars/chat-installation-consts.yaml
   
   tasks:
     - name: Pull rocket.chat, NGINX, MongoDB, nginx-proxy-companion from dockerhub
