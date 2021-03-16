@@ -1,6 +1,8 @@
 ---
 - hosts: test-servers
   become: true
+  vars_file:
+    - ../vars/mongo-primary-startup.yaml
 
   tasks:
     - name: Pull MongoDB
@@ -15,6 +17,13 @@
         # owner # = chown
         # mode # = chmod, starting with leading zero
     
+    - name: Create mongo startup file from a template
+      template:
+        src: config-templates/mongo-startup.sh.j2
+        dest: /home/coro/mongo-startup.sh
+        owner: "{{ ansible_user }}"
+        mode: 0744
+      
     - name: Create keyfile
       shell: openssl rand -base64 741 > /home/coro/mongodb-keyfile
       
@@ -36,12 +45,13 @@
         image: "mongo:4.0"
         hostname: "mongo1.mongo-cluster"
         env:
-          MONGO_INITDB_ROOT_USERNAME: "root"
-          MONGO_INITDB_ROOT_PASSWORD: "password"
-          MONGO_INITDB_DATABASE: "admin"
+          MONGO_INITDB_ROOT_USERNAME: "{{ MONGO_INITDB_ROOT_USERNAME }}"
+          MONGO_INITDB_ROOT_PASSWORD: "{{ MONGO_INITDB_ROOT_PASSWORD }}"
+          MONGO_INITDB_DATABASE: "{{ MONGO_INITDB_DATABASE }}"
         volumes:
           - /home/coro/mongo-files/data:/data/db
           - /home/coro:/opt/keyfile
+          - /home/coro/mongo-startup.sh:/docker-entrypoint-initdb.d/init-mongo.sh
         exposed_ports:
           - "27017:27017"
         detach: yes
