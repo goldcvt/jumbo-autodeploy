@@ -50,7 +50,7 @@
           MONGO_INITDB_DATABASE: "{{ MONGO_INITDB_DATABASE }}"
         volumes:
           - /home/coro/mongo-files/data:/data/db
-        #  - /home/coro:/opt/keyfile
+          - /home/coro:/opt/keyfile
           - /home/coro/mongo-startup.sh:/docker-entrypoint-initdb.d/init-mongo.sh
         exposed_ports:
           - "27017:27017"
