@@ -35,13 +35,13 @@
       # does both locally and remotely??
     - name: Add Mongo container to inventory
       add_host:
-        name: MongoDB-master
+        name: "MongoDB-master"
         ansible_connection: docker
       changed_when: false
         
     - name: Run a sample docker command
       raw: bash
-      delegate_to: MongoDB-master
+      delegate_to: "MongoDB-master"
       
 #    - name: Create admin user
 #      community.mongodb.mongodb_user:
