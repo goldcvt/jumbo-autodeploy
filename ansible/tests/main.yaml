@@ -19,7 +19,7 @@
     
     - name: Create mongo startup file from a template
       template:
-        src: config-templates/mongo-startup.sh.j2
+        src: ../config-templates/mongo-startup.sh.j2
         dest: /home/coro/mongo-startup.sh
         owner: "{{ ansible_user }}"
         mode: 0744
