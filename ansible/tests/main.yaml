@@ -19,9 +19,12 @@
     
     - name: Create keyfile
       shell: openssl rand -base64 741 > /home/coro/mongodb-keyfile
-    
-    
-    # TODO add chmod 600/chown?
+      
+    - name: Chmod the keyfile
+      shell: chmod 600 /home/coro/mongodb-keyfile
+      
+    - name: Change owner to Mongo-container user
+      shell: chown 999 /home/coro/mongodb-keyfile
     
     - name: Create network
       docker_network:
