@@ -1,5 +1,4 @@
 ---
-- name: Installing rocketchat
 - hosts: rocketchat:app
   become: true
   vars_files:
