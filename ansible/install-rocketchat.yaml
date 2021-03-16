@@ -77,9 +77,38 @@
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - acme:/etc/acme.sh
-        
-    - name: Run MongoDB with all of the needed stuff
-      # doing the stuff, deploying mongodb-master node
+
+    # deploying mongodb-master node   
+    - name: Init MongoDB master
+      docker_container:
+        state: present
+        name: "MongoDB-master"
+        image: "mongo:{{ mongo_tag }}"
+        hostname: "mongo1.{{ domain | mandatory }}"
+        volumes: 
+          - /home/core/mongo-files/data:/data/db
+          - /home/core/mongo-files:/opt/keyfile
+        exposed_ports:
+          - "27017:27017"
+        detach: yes
+        command: --smallFiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
+        networks:
+          - name: db-net
+      
+      
+    - name: Add Mongo container to inventory
+      add_host:
+        name: "MongoDB-master"
+        ansible_connection: docker
+        changed_when: false
+
+    - name: Run command in container
+      delegate_to: "MongoDB-master"
+      raw: bash
+      
+      # Ключ можно создать, скопировать на управляющую машину, потом откопировать на другие
+      
+    - name: 
     - import_playbook: setup-mongos.yaml
     
     # TODO how to connect to remote MongoDB servers?? Should we?
