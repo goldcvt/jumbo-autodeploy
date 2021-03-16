@@ -7,7 +7,7 @@
   
   tasks:
     - name: Pull rocket.chat, NGINX, MongoDB, nginx-proxy-companion from dockerhub
-      docker-image: 
+      docker_image: 
         name: "{{ item }}"
         source: pull
         pull:
