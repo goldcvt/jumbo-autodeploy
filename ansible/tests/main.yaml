@@ -3,14 +3,26 @@
   become: true
 
   tasks:
-
     - name: Pull MongoDB
       docker_image:
         name: "mongo:4.0"
         source: pull
         # pull:
         #   platform: amd64
-
+    
+    - name: Create directory for keyfile
+      file:
+        state: directory
+        path: /home/coro/mongo-files
+        # owner # = chown
+        # mode # = chmod, starting with leading zero
+    
+    - name: Create keyfile
+      shell: openssl rand -base64 741 > /home/coro/mongodb-keyfile
+    
+    
+    # TODO add chmod 600/chown?
+    
     - name: Create network
       docker_network:
         name: db-net
@@ -22,7 +34,7 @@
         state: started
         name: "MongoDB-master"
         image: "mongo:4.0"
-        hostname: "mongo1.sosamba-mamba"
+        hostname: "mongo1.mongo-cluster"
         volumes:
           - /home/core/mongo-files/data:/data/db
           - /home/core:/opt/keyfile
