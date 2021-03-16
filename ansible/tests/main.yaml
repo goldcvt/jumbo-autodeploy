@@ -25,7 +25,7 @@
         hostname: "mongo1.sosamba-mamba"
         volumes:
           - /home/core/mongo-files/data:/data/db
-          - /home/core/mongo-files:/opt/keyfile
+          - /home/core:/opt/keyfile
         exposed_ports:
           - "27017:27017"
         detach: yes
