@@ -100,7 +100,8 @@
         name: "MongoDB-master"
         ansible_connection: docker
         changed_when: false
-
+      
+      # REQUIRES DOCKER ON MACHINE RUNNING THIS PLAYBOOK!
     - name: Run command in container
       delegate_to: "MongoDB-master"
       raw: bash
