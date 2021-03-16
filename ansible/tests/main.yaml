@@ -40,7 +40,7 @@
       changed_when: false
         
     - name: Run a sample docker command
-      raw: bash
+      raw: ls
       delegate_to: "MongoDB-master"
       
 #    - name: Create admin user
