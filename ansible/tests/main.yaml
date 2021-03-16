@@ -1,0 +1,57 @@
+---
+- hosts: test-servers
+  become: true
+
+  tasks:
+
+    - name: Pull MongoDB
+      docker_image:
+        name: "mongo:4.0"
+        source: pull
+        # pull:
+        #   platform: amd64
+
+    - name: Create network
+      docker_network:
+        name: db-net
+        attachable: yes
+
+    - name: Init MongoDB master
+      docker_container:
+        state: present
+        name: "MongoDB-master"
+        image: "mongo:4.0"
+        hostname: "mongo1.sosamba-mamba"
+        volumes:
+          - /home/core/mongo-files/data:/data/db
+          - /home/core/mongo-files:/opt/keyfile
+        exposed_ports:
+          - "27017:27017"
+        detach: yes
+        command: --smallFiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
+        networks:
+          - name: db-net
+
+    - name: Add Mongo container to inventory
+      add_host:
+        name: "MongoDB-master"
+        ansible_connection: docker
+        changed_when: false
+
+    - name: Create admin user
+      delegate_to: "MongoDB-master"
+      community.mongodb.mongodb_user:
+        database: admin
+        name: siteUserAdmin
+        password: password #"{{ admin-password | mandatory }}"
+        roles: userAdminAnyDatabase
+        state: present
+
+    - name: Create root user
+      delegate_to: "MongoDB-master"
+      community.mongodb.mongodb_user:
+        database:
+        name: siteRootAdmin
+        password: p4ssw0rd #"{{ root-password | mandatory }}"
+        roles: root
+        state: present
