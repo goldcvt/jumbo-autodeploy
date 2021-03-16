@@ -7,8 +7,6 @@
       docker_image:
         name: "mongo:4.0"
         source: pull
-        # pull:
-        #   platform: amd64
     
     - name: Create directory for keyfile
       file:
@@ -38,13 +36,16 @@
         name: "MongoDB-master"
         image: "mongo:4.0"
         hostname: "mongo1.mongo-cluster"
+        env:
+          - MONGO_INITDB_ROOT_USERNAME=root
+          - MONGO_INITDB_ROOT_PASSWORD=p4ssw0rd
         volumes:
           - /home/coro/mongo-files/data:/data/db
           - /home/coro:/opt/keyfile
         exposed_ports:
           - "27017:27017"
         detach: yes
-        command: --smallfiles --oplogSize 128 --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
+        command: --smallfiles --oplogSize 128 # --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
         networks:
           - name: db-net
         purge_networks: yes
@@ -67,13 +68,6 @@
         password: password #"{{ admin-password | mandatory }}"
         roles: userAdminAnyDatabase
         state: present
-      delegate_to: "MongoDB-master"
-
-    - name: Create root user
-      community.mongodb.mongodb_user:
-        database:
-        name: siteRootAdmin
-        password: p4ssw0rd #"{{ root-password | mandatory }}"
-        roles: root
-        state: present
+        login_user: root
+        login_password: p4ssw0rd
       delegate_to: "MongoDB-master"
