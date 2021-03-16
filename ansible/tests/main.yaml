@@ -19,7 +19,7 @@
       # not running?
     - name: Init MongoDB master
       docker_container:
-        state: present
+        state: started
         name: "MongoDB-master"
         image: "mongo:4.0"
         hostname: "mongo1.sosamba-mamba"
