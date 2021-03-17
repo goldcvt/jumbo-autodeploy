@@ -1,5 +1,5 @@
 sys_type: amd64
-mongo_tag: 4.0
+mongo_tag: 3.4.10
 jwilder_nginx_tag: 0.8.0
 le_companion_tag: 2.0
 rocketchat_tag: 3.12.1
