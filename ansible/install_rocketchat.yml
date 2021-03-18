@@ -11,13 +11,17 @@
       register: mongo
       run_once: true
        
+    - name: Testinn
+      debug:
+        msg: "Exist!"
+      when: mongo.exists
       
     - name: Setup mongodb if absent
       #include_role:
       #  name: docker_mongo
       debug:
-        msg: mongo.exists
-      when: mongo.exists
+        msg: "{{ mongo.exists }}"
+      when: not mongo.exists
 
 - hosts: rocketchat-app-secured
   become: true
