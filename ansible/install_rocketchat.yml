@@ -108,8 +108,8 @@
           VIRTUAL_HOST: "chat.{{ domain }}"
           VIRTUAL_PORT: "{{ 2999 + item|int }}"
           LETSENCRYPT_HOST: "chat.{{ domain }}"
-          MONGO_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat&authSource=admin"
-          MONGO_OPLOG_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0&authSource=admin"
+          MONGO_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat&authSource=rocketchat"
+          MONGO_OPLOG_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0&authSource=rocketchat"
         detach: yes
       with_sequence: start=1 end="{{ rc_quantity|int }}"
     
