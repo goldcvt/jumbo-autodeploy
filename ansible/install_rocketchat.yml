@@ -70,7 +70,7 @@
         detach: yes
         volumes: 
           - /var/run/docker.sock:/tmp/docker.sock:ro
-          - certs:/etc/nginx/certs:ro 
+          - certs:/etc/nginx/certs:ro # Can't write?
           - vhost:/etc/nginx/vhost.d
           - webroot:/usr/share/nginx/html
         #networks:
@@ -80,7 +80,7 @@
           - "443:443"
         
     
-    # Use fs mount instead of volume for conf. We'll need to modify the config every time we start another instance of rocket.chat
+    # Can't write to /certs
     - name: Run nginx-proxy-companion with all of the needed stuff
       docker_container:
         state: started
@@ -102,10 +102,10 @@
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         env:
           PORT: "{{ 2999 + item|int }}"
-          ROOT_URL: "chat.{{ domain | mandatory }}"
-          VIRTUAL_HOST: "chat.{{ domain | mandatory }}"
+          ROOT_URL: "chat.{{ domain|str }}"
+          VIRTUAL_HOST: "chat.{{ domain|str}}"
           VIRTUAL_PORT: "{{ 2999 + item|int }}"
-          LETSENCRYPT_HOST: "chat.{{ domain | mandatory }}"
+          LETSENCRYPT_HOST: "chat.{{ domain|str }}"
           MONGO_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat"
           MONGO_OPLOG_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0"
         detach: yes
