@@ -1,0 +1,59 @@
+---
+- name: pull docker mongo image
+  docker_image:
+    name: mongo
+    tag: "{{ mongo_version }}"
+
+- name: ensure {{ mongodb_host_dir }} exists
+  file:
+    name: "{{ mongodb_host_dir }}"
+    state: directory
+
+- name: ensure {{ local_secret_path }} exists
+  delegate_to: localhost
+  run_once: true
+  file:
+    name: "{{ local_secret_path }}"
+    state: directory
+  any_errors_fatal: true
+  
+- name: Create keyfile on local
+  delegate_to: localhost
+  shell: openssl rand -base64 741 > "{{ local_secret_path }}/secret"
+  run_once: true
+  any_errors_fatal: true
+  
+  
+- name: Copy secret file to remotes
+  copy:
+    src: "{{ local_secret_path }}/secret"
+    dest: "{{ mongodb_host_dir }}/secret"
+    owner: 999
+    group: 999
+    mode: 0600
+
+- name: ensure {{ mongodb_logdir }} exists
+  file:
+    name: "{{ mongodb_logdir }}"
+    state: directory
+    owner: "999"
+    group: "999"
+    mode: 0755
+
+- name: start mongodb containers
+  docker_container:
+    name: "{{ docker_instance_name }}"
+    image: "mongo:{{ mongo_version }}"
+    state: started
+    command: "mongod --replSet {{ replica_set_name }} --logpath {{mongodb_logdir}}/mongodb.log --logappend --keyFile {{ mongodb_datadir}}/secret --oplogSize {{ oplog_size }}"
+    volumes:
+      - "mongoData-{{ ansible_hostname }}:/data/db"
+      - "{{ mongodb_logdir }}:{{ mongodb_logdir }}"
+      - "{{ mongodb_host_dir }}/secret:{{ mongodb_datadir }}/secret"
+    ports:
+      - "0.0.0.0:{{ mongodb_port }}:{{ mongodb_port }}"
+
+- include: mongod-replica.yml
+  when:
+    - inventory_hostname == ansible_play_hosts | first
+  static: false

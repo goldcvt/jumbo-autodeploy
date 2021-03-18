@@ -1,0 +1,13 @@
+---
+- hosts: rocketchat-mongodb
+  become: true
+  
+  tasks:
+    - name: Stop container
+      command: docker stop "{{ docker_instance_name }}"
+      
+    - name: Remove container & volumes
+      command: docker rm -v "{{ docker_instance_name }}"
+      
+    - name: Remove orphaned containers
+      command: docker volume prune --force

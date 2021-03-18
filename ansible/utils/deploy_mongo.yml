@@ -1,0 +1,6 @@
+- hosts: rocketchat-mongodb
+  any_errors_fatal: true
+  roles:
+    - docker-mongo
+  become: true
+  become_method: sudo
