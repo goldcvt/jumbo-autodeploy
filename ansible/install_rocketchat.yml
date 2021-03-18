@@ -104,10 +104,10 @@
           - "{{ 2999 + item|int }}"
         env:
           PORT: "{{ 2999 + item|int }}"
-          ROOT_URL: "chat.{{ domain|str }}"
-          VIRTUAL_HOST: "chat.{{ domain|str}}"
+          ROOT_URL: "chat.{{ domain }}"
+          VIRTUAL_HOST: "chat.{{ domain }}"
           VIRTUAL_PORT: "{{ 2999 + item|int }}"
-          LETSENCRYPT_HOST: "chat.{{ domain|str }}"
+          LETSENCRYPT_HOST: "chat.{{ domain }}"
           MONGO_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat"
           MONGO_OPLOG_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0"
         detach: yes
