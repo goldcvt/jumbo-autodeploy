@@ -70,7 +70,7 @@
         detach: yes
         volumes: 
           - /var/run/docker.sock:/tmp/docker.sock:ro
-          - certs:/etc/nginx/certs:ro # Can't write?
+          - certs:/etc/nginx/certs
           - vhost:/etc/nginx/vhost.d
           - webroot:/usr/share/nginx/html
         #networks:
