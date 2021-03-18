@@ -8,7 +8,7 @@
     - name: Setup mongodb if absent
       include_role:
         name: docker_mongo
-      when: false
+      when: "{{ install_mongo | default(3) }} is not defined"
 
 - hosts: rocketchat-app
   become: true
@@ -50,7 +50,7 @@
     # --mount/-v --network
     - name: Run NGINX with all of the needed stuff
       docker_container:
-        state: present
+        state: started
         name: "proxy"
         # env: 
         image: "jwilder/nginx-proxy:{{ jwilder_nginx_tag }}"
@@ -70,7 +70,7 @@
     # Use fs mount instead of volume for conf. We'll need to modify the config every time we start another instance of rocket.chat
     - name: Run nginx-proxy-companion with all of the needed stuff
       docker_container:
-        state: present
+        state: started
         name: "proxy_companion"
         image: "jrcs/letsencrypt-nginx-proxy-companion:{{ le_companion_tag }}"
         env: 
@@ -84,7 +84,7 @@
     # TODO how to connect to remote MongoDB servers?
     - name: Run (x) Rocket.Chats with all of the needed stuff
       docker_container:
-        state: present
+        state: started
         name: "rocketchat_{{ count }}"
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         env:
