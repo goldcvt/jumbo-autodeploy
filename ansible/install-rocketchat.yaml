@@ -1,5 +1,8 @@
 ---
-- hosts: rocketchat:app
+# Deploy mongo nodes if they are absent
+- import_playbook:
+
+- hosts: rocketchat-app
   become: true
   vars_files:
     - vars/chat-installation-consts.yaml
@@ -37,11 +40,6 @@
 #      docker_network:
 #        name: proxy-net
 #        attachable: yes
-        
-    - name: Create network for database
-      docker_network:
-        name: db-net
-        attachable: yes
     
     # --mount/-v --network
     - name: Run NGINX with all of the needed stuff
@@ -76,42 +74,8 @@
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - acme:/etc/acme.sh
-
-    # deploying mongodb-master node   
-    - name: Init MongoDB master
-      docker_container:
-        state: present
-        name: "MongoDB-master"
-        image: "mongo:{{ mongo_tag }}"
-        hostname: "mongo1.{{ domain | mandatory }}"
-        volumes: 
-          - /home/core/mongo-files/data:/data/db
-          - /home/core/mongo-files:/opt/keyfile
-        exposed_ports:
-          - "27017:27017"
-        detach: yes
-        command: --smallFiles --keyFile /opt/keyfile/mongodb-keyfile --replSet "rs0"
-        networks:
-          - name: db-net
-      
-      
-    - name: Add Mongo container to inventory
-      add_host:
-        name: "MongoDB-master"
-        ansible_connection: docker
-        changed_when: false
-      
-      # REQUIRES DOCKER ON MACHINE RUNNING THIS PLAYBOOK!
-    - name: Run command in container
-      delegate_to: "MongoDB-master"
-      raw: bash
-      
-      # Ключ можно создать, скопировать на управляющую машину, потом откопировать на другие
-      
-    - name: 
-    - import_playbook: setup-mongos.yaml
     
-    # TODO how to connect to remote MongoDB servers?? Should we?
+    # TODO how to connect to remote MongoDB servers?
     - name: Run (x) Rocket.Chats with all of the needed stuff
       docker_container:
         state: present
@@ -122,7 +86,5 @@
           VIRTUAL_PORT: "{{ count +3000 }}"
           LETSENCRYPT_HOST: "chat.{{ domain | mandatory }}"
         detach: yes
-        networks: 
-          - name: db-net
       with_sequence: count={{ rc_quantity | mandatory }}
     
