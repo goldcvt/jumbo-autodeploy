@@ -104,7 +104,7 @@
           - "{{ 2999 + item|int }}"
         env:
           PORT: "{{ 2999 + item|int }}"
-          ROOT_URL: "chat.{{ domain }}"
+          ROOT_URL: "https://chat.{{ domain }}"
           VIRTUAL_HOST: "chat.{{ domain }}"
           VIRTUAL_PORT: "{{ 2999 + item|int }}"
           LETSENCRYPT_HOST: "chat.{{ domain }}"
