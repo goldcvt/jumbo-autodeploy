@@ -5,12 +5,21 @@
   become_method: sudo
   
   tasks:
+    - name: Check that mongos exist
+      docker_container_info: 
+        name: "mongodb"
+      register: exists 
+      run_once: true
+       
+      
     - name: Setup mongodb if absent
-      include_role:
-        name: docker_mongo
-      when: "{{ install_mongo | default(3) }} is not defined"
+      #include_role:
+      #  name: docker_mongo
+      debug:
+        msg: "{{ exists }}"
+      when: "{{ exists }}"
 
-- hosts: rocketchat-app
+- hosts: rocketchat-app-secured
   become: true
   vars_files:
     - vars/chat_installation_consts.yaml
@@ -74,9 +83,9 @@
         name: "proxy_companion"
         image: "jrcs/letsencrypt-nginx-proxy-companion:{{ le_companion_tag }}"
         env: 
-          DEFAULT_EMAIL: "{{ le_email | mandatory }}"
+          DEFAULT_EMAIL: "{{ le_email | default(omit) }}"
         detach: yes
-        volumes_from: [[ "proxy" ]]
+        volumes_from: [ "proxy" ]
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - acme:/etc/acme.sh
@@ -85,12 +94,16 @@
     - name: Run (x) Rocket.Chats with all of the needed stuff
       docker_container:
         state: started
-        name: "rocketchat_{{ count }}"
+        name: "rocketchat_{{ item|int }}"
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         env:
+          PORT: "{{ 2999 + item|int }}"
+          ROOT_URL: "chat.{{ domain | mandatory }}"
           VIRTUAL_HOST: "chat.{{ domain | mandatory }}"
-          VIRTUAL_PORT: "{{ count +3000 }}"
+          VIRTUAL_PORT: "{{ 2999 + item|int }}"
           LETSENCRYPT_HOST: "chat.{{ domain | mandatory }}"
+          MONGO_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat"
+          MONGO_OPLOG_URL: "mongodb://{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0"
         detach: yes
-      with_sequence: count={{ rc_quantity | mandatory }}
+      with_sequence: start=1 end="{{ rc_quantity|int }}"
     
