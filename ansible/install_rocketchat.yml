@@ -21,7 +21,7 @@
         name: docker_mongo
       when: not mongo.exists
 
-- hosts: rocketchat-app-secured
+- hosts: rocketchat-app
   become: true
   vars_files:
     - vars/chat_installation_consts.yaml
