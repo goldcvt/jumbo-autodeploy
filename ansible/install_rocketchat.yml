@@ -101,7 +101,7 @@
         name: "rocketchat_{{ item|int }}"
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         exposed_ports:
-          - 3000
+          - "{{ 2999 + item|int }}"
         env:
           PORT: "{{ 2999 + item|int }}"
           ROOT_URL: "chat.{{ domain|str }}"
