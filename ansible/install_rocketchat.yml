@@ -8,7 +8,7 @@
     - name: Check that mongos exist
       docker_container_info: 
         name: "mongodb"
-      register: exists 
+      register: mongo
       run_once: true
        
       
@@ -16,8 +16,8 @@
       #include_role:
       #  name: docker_mongo
       debug:
-        msg: "{{ exists }}"
-      when: "{{ exists }}"
+        msg: mongo.exists
+      when: mongo.exists
 
 - hosts: rocketchat-app-secured
   become: true
