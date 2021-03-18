@@ -1,1 +1,0 @@
-mongo_playbook_path: ../../ansible-docker-mongodb/deploy_mongo.yml
