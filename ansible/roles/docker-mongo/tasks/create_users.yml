@@ -1,0 +1,21 @@
+---
+- name: Create db rocketchat
+  command: docker exec -it mongodb mongo --eval 'use rocketchat'
+  
+- name: Create users
+  command: docker exec -it mongodb "{{ item }}"
+  with_items: 
+    - "mongo admin --eval 'db.createUser({ 
+    user: \"root\", 
+    pwd: \"{{ mongo_useradmin_password }}\", 
+    roles: [ 
+    { role: \"root\", db: \"admin\" } 
+    ]
+    });'"
+    - "mongo admin -u root -p \"{{ mongo_useradmin_password }}\" --authenticationDatabase admin --eval 'Mongo().getDB(\"rocketchat\"); db.createUser({
+    user: \"{{ rc_user }}\",
+    pwd: \"{{ rc_password }}\",
+    roles: [
+    {role: \"dbOwner\", db: \"rocketchat\"}, {role: \"readWrite\", db: \"local\"}
+    ]
+    });'"  
