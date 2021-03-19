@@ -8,3 +8,4 @@ replica_set_name: rs0
 oplog_size: 990
 local_secret_path: /etc/mongodb/secret
 default_user: ubuntu
+backup_dir: /data/backups
