@@ -28,8 +28,8 @@
   copy:
     src: "{{ local_secret_path }}/secret"
     dest: "{{ mongodb_host_dir }}/secret"
-    owner: 999
-    group: 999
+    owner: "999"
+    group: "999"
     mode: 0600
 
 - name: ensure {{ mongodb_logdir }} exists
@@ -38,6 +38,13 @@
     state: directory
     owner: "999"
     group: "999"
+    mode: 0755
+
+- name: ensure {{ backup_dir }} exists
+  file:
+    name: "{{ backup_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
     mode: 0755
 
 - name: start mongodb containers
@@ -50,6 +57,13 @@
       - "mongoData-{{ ansible_hostname }}:/data/db"
       - "{{ mongodb_logdir }}:{{ mongodb_logdir }}"
       - "{{ mongodb_host_dir }}/secret:{{ mongodb_datadir }}/secret"
+    mounts:
+      consistency: default
+      read_only: no
+      type: bind
+      target: /rc_backups
+      source: "{{ backup_dir }}"
+      propagation: shared
     ports:
       - "0.0.0.0:{{ mongodb_port }}:{{ mongodb_port }}"
     restart_policy: always
