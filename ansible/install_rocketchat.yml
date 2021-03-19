@@ -78,6 +78,7 @@
         published_ports:
           - "80:80"
           - "443:443"
+        restart_policy: always
         
     
     # Can't write to /certs
@@ -93,6 +94,7 @@
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - acme:/etc/acme.sh
+        restart_policy: always
     
     # TODO how to connect to remote MongoDB servers?
     - name: Run (x) Rocket.Chats with all of the needed stuff
@@ -111,5 +113,6 @@
           MONGO_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/rocketchat?authSource=rocketchat"
           MONGO_OPLOG_URL: "mongodb://{{ rc_user }}:{{ rc_password }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017/local?replSet=rs0&authSource=rocketchat"
         detach: yes
+        restart_policy: always
       with_sequence: start=1 end="{{ rc_quantity|int }}"
     
