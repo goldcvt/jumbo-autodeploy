@@ -1,8 +1,5 @@
 ---
-- name: Create db rocketchat
-  command: docker exec -it mongodb mongo --eval 'Mongo().getDB(\"rocketchat\")'
-  
-- name: Create users
+- name: Create users (db will be created automatically)
   command: docker exec -it mongodb "{{ item }}"
   with_items: 
     - "mongo admin --eval 'db.createUser({ 
