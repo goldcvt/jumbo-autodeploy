@@ -12,7 +12,7 @@
     { role: \"root\", db: \"admin\" } 
     ]
     });'"
-    - "mongo admin -u root -p \"{{ mongo_useradmin_password }}\" --authenticationDatabase admin --eval 'Mongo().getDB(\"rocketchat\"); db.createUser({
+    - "mongo rocketchat -u root -p \"{{ mongo_useradmin_password }}\" --authenticationDatabase admin --eval 'db.createUser({
     user: \"{{ rc_user }}\",
     pwd: \"{{ rc_password }}\",
     roles: [
