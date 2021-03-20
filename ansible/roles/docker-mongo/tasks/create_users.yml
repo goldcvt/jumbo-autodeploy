@@ -23,3 +23,4 @@
     {role: \"read\", db: \"local\"}, {role: \"clusterMonitor\", db: \"admin\"}
     ]
     });'"
+# Roles are compliant with https://docs.rocket.chat/installation/docker-containers/high-availability-install/#guide-to-install-rocketchat-as-ha-with-mongodb-replicaset-as-backend
