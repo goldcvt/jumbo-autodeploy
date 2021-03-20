@@ -10,6 +10,6 @@ local_secret_path: /etc/mongodb/secret
 rc_user: rocketchat
 rc_password: rocketchat # TODO add vault
 mongo_useradmin_password: qWmcwWIfn172cwDc # TODO add vault
-rc_oplog_user: oplogUser
-rc_oplog_password: aDWDnclfienvsAWd3 # TODO add vault or auto-generation
+rc_oplog_user: rocketchat
+rc_oplog_password: rocketchat # TODO add vault or auto-generation
 backup_dir: /data/backups
