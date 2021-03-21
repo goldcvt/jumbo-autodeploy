@@ -17,9 +17,9 @@
     - "{{ rc_oplog_password }} as rc_oplog_user pass"
   
 - name: Create users (db will be created automatically)
-  command: docker exec -it mongodb "{{ item }}"
+  command: docker exec -it mongodb {{ item }}
   with_items: 
-    - "mongo admin --eval 'db.createUser({ user: \"root\", pwd: \"{{ mongo_useradmin_password }}\", roles: [ { role: \"root\", db: \"admin\" } ] });'"
-    - "mongo rocketchat -u root -p \"{{ mongo_useradmin_password }}\" --authenticationDatabase admin --eval 'db.createUser({ user: \"{{ rc_user }}\", pwd: \"{{ rc_password }}\", roles: [ {role: \"readWrite\", db: \"rocketchat\"}, {role: \"clusterMonitor\", db: \"admin\"} ] });'"
-    - "mongo rocketchat -u root -p \"{{ mongo_useradmin_password }}\" --authenticationDatabase admin --eval 'db.createUser({ user: \"{{ rc_oplog_user }}\", pwd: \"{{ rc_oplog_password }}\", roles: [ {role: \"read\", db: \"local\"}, {role: \"clusterMonitor\", db: \"admin\"} ] });'"
+    - "mongo admin --eval 'db.createUser({ user: \"root\", pwd: \"{{ mongo_useradmin_password }}\", roles: [ { role: \"root\", db: \"admin\" } ] })'"
+    - "mongo rocketchat -u root -p {{ mongo_useradmin_password }} --authenticationDatabase admin --eval 'db.createUser({ user: \"{{ rc_user }}\", pwd: \"{{ rc_password }}\", roles: [ {role: \"readWrite\", db: \"rocketchat\"}, {role: \"clusterMonitor\", db: \"admin\"} ] })'"
+    - "mongo rocketchat -u root -p {{ mongo_useradmin_password }} --authenticationDatabase admin --eval 'db.createUser({ user: \"{{ rc_oplog_user }}\", pwd: \"{{ rc_oplog_password }}\", roles: [ {role: \"read\", db: \"local\"}, {role: \"clusterMonitor\", db: \"admin\"} ] })'"
 # Roles are compliant with https://docs.rocket.chat/installation/docker-containers/high-availability-install/#guide-to-install-rocketchat-as-ha-with-mongodb-replicaset-as-backend
