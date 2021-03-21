@@ -6,7 +6,7 @@ mongodb_datadir: /data/db
 mongodb_logdir: /var/log/mongodb
 replica_set_name: rs0
 oplog_size: 990
-local_secret_path: /etc/mongodb/secret
+local_secret_path: /etc/mongodb
 rc_user: rocketchat
 rc_password: rocketchat # TODO add vault
 mongo_useradmin_password: qWmcwWIfn172cwDc # TODO add vault
