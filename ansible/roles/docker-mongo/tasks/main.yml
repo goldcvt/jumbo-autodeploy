@@ -58,12 +58,12 @@
       - "{{ mongodb_logdir }}:{{ mongodb_logdir }}"
       - "{{ mongodb_host_dir }}/secret:{{ mongodb_datadir }}/secret"
     mounts:
-      - consistency: default
-      - read_only: no
-      - type: bind
       - target: /rc_backups
-      - source: "{{ backup_dir }}"
-      - propagation: shared
+        consistency: default
+        read_only: no
+        type: bind
+        source: "{{ backup_dir }}"
+        propagation: shared
     ports:
       - "0.0.0.0:{{ mongodb_port }}:{{ mongodb_port }}"
     restart_policy: always
