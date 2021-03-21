@@ -1,4 +1,8 @@
 ---
+- name: let the containers spin up..
+  pause:
+    seconds: 10
+
 - name: create the file to initialize mongod replica set
   template:
     src: repset_init.j2
