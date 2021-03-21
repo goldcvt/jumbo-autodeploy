@@ -75,5 +75,5 @@
   
 - include: create_users.yml
   delegate_to: rocketchat-mongodb[0]
-  play_once: true
+  run_once: true
   static: false
