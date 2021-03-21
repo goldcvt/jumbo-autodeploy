@@ -95,6 +95,7 @@
         image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
         exposed_ports:
           - "{{ 2999 + item|int }}"
+        recreate: yes
         env:
           PORT: "{{ 2999 + item|int }}"
           ROOT_URL: "https://chat.{{ domain }}"
