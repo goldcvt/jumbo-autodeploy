@@ -74,4 +74,6 @@
   static: false
   
 - include: create_users.yml
+  when:
+    - inventory_hostname == ansible_play_hosts | first
   static: false
