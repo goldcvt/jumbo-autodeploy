@@ -1,4 +1,4 @@
-mongo_version: 3.4.10
+mongo_version: 4.0
 docker_instance_name: mongodb
 mongodb_port: 27017
 mongodb_host_dir: /etc/mongo
