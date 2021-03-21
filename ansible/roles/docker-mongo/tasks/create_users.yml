@@ -1,16 +1,17 @@
 ---
-- set_fact:
-    mongo_useradmin_password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+#- set_fact:
+#    mongo_useradmin_password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
     
-- set_fact:
-    rc_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+#- set_fact:
+#    rc_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
     
-- set_fact:
-    rc_oplog_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+#- set_fact:
+#    rc_oplog_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
     
 - debug:
     msg: "{{ item }}"
   with_items:
+    - "Set passes for mongo users:"
     - "{{ mongo_useradmin_password }} as root pass"
     - "{{ rc_password }} as rc_user pass"
     - "{{ rc_oplog_password }} as rc_oplog_user pass"
