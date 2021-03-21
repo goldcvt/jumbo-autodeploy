@@ -1,4 +1,6 @@
 ---
+# Known issues: 
+# recreating mongo volumes after NOT PURGING the SECRET ends with docker volume stuck in 'busy' state
 - name: pull docker mongo image
   docker_image:
     name: mongo
