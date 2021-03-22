@@ -42,8 +42,8 @@
     index_var: my_idx
 
 - name: deploy (x) JVBs
-  include: inventory_jitsi_jvb.yml
-  when: play_hostname in groups['jitsi-jvb']
+  include: deploy_jitsi_jvb.yml
+  when: inventory_hostname in groups['jitsi-jvb']
   static: false
   
 - name: deploy 1 jitsi-app
