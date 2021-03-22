@@ -1,2 +1,3 @@
-installation_folder: /opt/docker-jitsi
+jitsi_installation_folder: /opt/docker-jitsi
 jvb_quantity: 3
+my_email: "example@une.co"
