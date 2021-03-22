@@ -1,7 +1,7 @@
 ---
 # play these tasks for ALL jitsi nodes
-- name: Install gtar
-  apt: name=gtar state=latest update_cache=yes
+#- name: Install gtar
+#  apt: name=gtar state=latest update_cache=yes
     
 
 # https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
