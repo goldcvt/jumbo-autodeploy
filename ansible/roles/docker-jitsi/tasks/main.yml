@@ -1,5 +1,5 @@
 ---
-
+# play these tasks for ALL jitsi nodes
 - name: Install gtar
   apt: name=gtar state=latest update_cache=yes
     
@@ -29,7 +29,7 @@
   delegate_to: localhost
   run_once: true
 
-- name: 
+- name: Set password variables
   set_fact: "{{ item }}={{ result.results[my_idx].stdout }}"
   loop:
     - jicofo_component_secret
@@ -40,3 +40,12 @@
     - jibri_xmpp_password
   loop_control:
     index_var: my_idx
+
+- name: deploy (x) JVBs
+  include: deploy_jitsi_jvb.yml
+  when: play_hostname in groups['jitsi-jvb']
+  
+- name: deploy 1 jitsi-app
+  include: deploy_jitsi_app.yml
+  when: inventory_hostname in groups['jitsi-app']
+  static: false
