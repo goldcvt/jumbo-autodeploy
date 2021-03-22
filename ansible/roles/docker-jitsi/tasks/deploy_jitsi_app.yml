@@ -1,8 +1,8 @@
 ---
 
 - name: Replace docker-compose.yml
-  template:
-    src: main-docker-compose.yml.j2
+  copy:
+    src: main-docker-compose.yml
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
   
 - name: Replace .env
