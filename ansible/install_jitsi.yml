@@ -6,4 +6,4 @@
   tasks:
     - name: Setup jitsi.....
       include_role:
-        name: docker-mongo
+        name: docker-jitsi
