@@ -1,7 +1,7 @@
 ---
 - name: Replace docker-compose.yml
   template:
-    src: jvb-docker-compose.yml
+    src: jvb-docker-compose.yml.j2
     dest: "{{ jitsi_installation_folder }}/docker-compose.yml"
   
 - name: Replace .env file
