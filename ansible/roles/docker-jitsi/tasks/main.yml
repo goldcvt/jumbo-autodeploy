@@ -1,0 +1,22 @@
+---
+
+- name: Install gtar
+  apt: name=gtar state=latest update_cache=yes
+    
+
+# https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
+- name: Make sure folder exists
+  file:
+    state: directory
+    path: /opt/docker-jitsi
+    mode: 0775
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Download & extract archive (version is hardcoded!)
+  unarchive:
+    remote_src: yes
+    src: https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
+    dest: /opt/docker-jitsi
+ 
+    
