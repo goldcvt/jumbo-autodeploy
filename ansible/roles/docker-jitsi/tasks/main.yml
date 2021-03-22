@@ -42,7 +42,7 @@
     index_var: my_idx
 
 - name: deploy (x) JVBs
-  include: deploy_jitsi_jvb.yml
+  include: inventory_jitsi_jvb.yml
   when: play_hostname in groups['jitsi-jvb']
   static: false
   
