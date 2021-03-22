@@ -8,7 +8,7 @@
 - name: Replace .env
   template:
     src: main.env.j2
-    dest: "{{ jitsi_installation_folder }}/.env"
+    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env"
 
 - name: Replace 10-conf
   template:
