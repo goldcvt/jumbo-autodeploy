@@ -15,5 +15,5 @@
     src: 10-config.j2
     dest: "{{ jitsi_installation_folder }}/prosody/rootfs/etc/cont-init.d/10-config"
 
-- name: Run jvb containers via docker-compose
+- name: Run jitsi-app containers via docker-compose
   command: docker-compose up -f {{ jitsi_installation_folder }}/docker-compose.yml
