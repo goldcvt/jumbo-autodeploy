@@ -1,0 +1,9 @@
+---
+- hosts: jitsi
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: Setup jitsi.....
+      include_role:
+        name: docker-mongo
