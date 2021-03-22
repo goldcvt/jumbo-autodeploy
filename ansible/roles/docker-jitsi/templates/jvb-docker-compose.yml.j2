@@ -8,7 +8,7 @@ services:
             - '${JVB_TCP_PORT}:${JVB_TCP_PORT}'
             - '4096:4096/udp'
         volumes:
-            - ${CONFIG}/jvb:/config
+            - ${CONFIG}/jvb:/config:Z
         environment:
             - DOCKER_HOST_ADDRESS
             - XMPP_DOMAIN
