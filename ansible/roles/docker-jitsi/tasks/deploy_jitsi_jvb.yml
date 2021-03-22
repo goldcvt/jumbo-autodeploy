@@ -1,0 +1,14 @@
+---
+- name: Replace docker-compose.yml
+  template:
+    src: jvb-docker-compose.yml
+    dest: "{{ jitsi_installation_folder }}/docker-compose.yml"
+  
+- name: Replace .env file
+  template:
+    src: .env.j2
+    dest: "{{ jitsi_installation_folder }}/.env"
+    
+  
+- name: Run jvb containers via docker-compose
+  command: docker-compose up -f {{ jitsi_installation_folder }}/docker-compose.yml
