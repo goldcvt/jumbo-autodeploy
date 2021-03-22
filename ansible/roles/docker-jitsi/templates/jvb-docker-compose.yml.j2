@@ -1,7 +1,7 @@
 services:
    # Video bridge
     jvb:
-        #image: jitsi/jvb
+        #image: jitsi/jvb:stable-5390-1
         build: ./jvb
         ports:
             - '${JVB_PORT}:${JVB_PORT}/udp'
