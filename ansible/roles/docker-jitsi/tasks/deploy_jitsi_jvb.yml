@@ -2,13 +2,13 @@
 - name: Replace docker-compose.yml
   template:
     src: jvb-docker-compose.yml.j2
-    dest: "{{ jitsi_installation_folder }}/docker-compose.yml"
+    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
   
 - name: Replace .env file
   template:
     src: .env.j2
-    dest: "{{ jitsi_installation_folder }}/.env"
+    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env"
     
   
 - name: Run jvb containers via docker-compose
-  command: docker-compose -f up -d {{ jitsi_installation_folder }}/docker-compose.yml
+  command: docker-compose -f up -d {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml
