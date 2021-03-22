@@ -1,0 +1,19 @@
+---
+
+- name: Replace docker-compose.yml
+  template:
+    src: main-docker-compose.yml.j2
+    dest: "{{ jitsi_installation_folder }}/docker-compose.yml"
+  
+- name: Replace .env
+  template:
+    src: main.env.j2
+    dest: "{{ jitsi_installation_folder }}/.env"
+
+- name: Replace 10-conf
+  template:
+    src: 10-config.j2
+    dest: "{{ jitsi_installation_folder }}/prosody/rootfs/etc/cont-init.d/10-config"
+
+- name: Run jvb containers via docker-compose
+  command: docker-compose up -f {{ jitsi_installation_folder }}/docker-compose.yml
