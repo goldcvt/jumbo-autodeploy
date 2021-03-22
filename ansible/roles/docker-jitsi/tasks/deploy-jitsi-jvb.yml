@@ -1,0 +1,8 @@
+---
+- name: Replace docker-compose.yml
+
+- name: Replace .env file
+ 
+- name: Replace .conf
+
+- name: Run jvb containers via docker-compose
