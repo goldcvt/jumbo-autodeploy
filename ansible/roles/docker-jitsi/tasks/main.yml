@@ -44,6 +44,7 @@
 - name: deploy (x) JVBs
   include: deploy_jitsi_jvb.yml
   when: play_hostname in groups['jitsi-jvb']
+  static: false
   
 - name: deploy 1 jitsi-app
   include: deploy_jitsi_app.yml
