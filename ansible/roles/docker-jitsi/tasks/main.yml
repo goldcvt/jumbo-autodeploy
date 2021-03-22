@@ -19,4 +19,24 @@
     src: https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
     dest: /opt/docker-jitsi
  
-    
+ 
+  # WARNING: SOME REALLY BAD (BUT CLEVER) CODE (OR WHATEVER) AHEAD
+  
+- name: Generate random string
+  command: openssl rand -hex 16
+  register: result
+  loop: [1, 2, 3, 4, 5, 6]
+  delegate_to: localhost
+  run_once: true
+
+- name: 
+  set_fact: "{{ item }}={{ result.results[my_idx].stdout }}"
+  loop:
+    - jicofo_component_secret
+    - jicofo_auth_password
+    - jvb_auth_password
+    - jigasi_xmpp_password
+    - jibri_recorder_password
+    - jibri_xmpp_password
+  loop_control:
+    index_var: my_idx
