@@ -1,7 +1,7 @@
 ---
 - name: Replace docker-compose.yml
   copy:
-    src: main-docker-compose.yml
+    src: jvb-docker-compose.yml
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
   
 - name: Replace .env file
