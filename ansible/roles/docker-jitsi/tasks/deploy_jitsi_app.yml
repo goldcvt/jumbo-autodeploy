@@ -16,7 +16,7 @@
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/prosody/rootfs/etc/cont-init.d/10-config"
 
 - name: Run jitsi-app containers via docker-compose
-  command: docker-compose --project-directory {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1 --project-name jitsi up -d
+  command: docker-compose --project-directory {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1 --project-name -f {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml jitsi up -d
   #docker_compose:
   #  recreate: smart
   #  project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
