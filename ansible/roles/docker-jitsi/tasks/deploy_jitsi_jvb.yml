@@ -11,9 +11,11 @@
     
   
 - name: Run jvb containers via docker-compose
-  docker_compose:
-    recreate: smart
-    project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
-    files: docker-compose.yml
-    
-  # command: docker-compose -f {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml --env-file {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env up -d
+  command: docker-compose --project-directory {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1 --project-name jitsi up -d
+  #docker_compose:
+  #  recreate: smart
+  #  project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
+  #  files: docker-compose.yml
+  
+  
+  
