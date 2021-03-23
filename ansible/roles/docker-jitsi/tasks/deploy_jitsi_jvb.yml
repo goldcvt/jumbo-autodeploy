@@ -11,4 +11,4 @@
     
   
 - name: Run jvb containers via docker-compose
-  command: docker-compose -f {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml up -d
+  command: docker-compose -f {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml --env-file {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env up -d
