@@ -33,3 +33,7 @@ services:
             meet.jitsi:
                 aliases:
                     - ${JVB_AUTH_USER}.${XMPP_DOMAIN}
+                    
+# Custom network so all services can communicate using a FQDN
+networks:
+    meet.jitsi:
