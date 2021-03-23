@@ -21,3 +21,4 @@
     recreate: smart
     project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
     files: docker-compose.yml
+    project_name: jitsi
