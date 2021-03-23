@@ -40,9 +40,10 @@
     - jibri_xmpp_password
   loop_control:
     index_var: my_idx
-
+  
+  # TODO chenge that shit - doesn't work properly
 - name: Creating directories
-  command: 'mkdir -p {{ jitsi_installation_folder }}/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}'
+  command: "mkdir -p {{ jitsi_installation_folder }}/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}"
   
 
 - name: deploy (x) JVBs
