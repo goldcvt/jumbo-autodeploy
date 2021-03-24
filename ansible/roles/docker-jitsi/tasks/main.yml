@@ -39,14 +39,17 @@
   loop_control:
     index_var: my_idx
     
+- name: Create overlay network for jitsi
+  docker_network:
+    name: "meet.jitsi"
+    driver: overlay
+  run_once: true
+  delegate_to: "{{ groups.docker-swarm[0] }}" # delegating to first master node. Idk if it will show up on all hosts
+
 - name: Create config directories
   include: create_config_directories.yml
+  static: false
   
-  # TODO chenge that shit - doesn't work properly
-- name: Creating directories
-  command: "mkdir -p /opt/docker-jitsi/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}"
-  
-
 - name: deploy (x) JVBs
   include: deploy_jitsi_jvb.yml
   when: inventory_hostname in groups['jitsi-jvb']
