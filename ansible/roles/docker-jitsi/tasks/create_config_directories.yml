@@ -1,0 +1,56 @@
+---
+- name: Create jibri folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jibri"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create jicofo folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jicofo"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create jigasi folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jigasi"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create prosody-config folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/prosody/config"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create prosody custom-plugins folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/prosody/prosody-plugins-custom"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create transcripts folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/transcripts"
+    owner: 999
+    group: 999
+    mode: 0757
+    
+- name: Create web folder
+  file:
+    state: directory
+    path: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/web/letsencrypt"
+    owner: 999
+    group: 999
+    mode: 0757
