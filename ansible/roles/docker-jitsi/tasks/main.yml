@@ -1,7 +1,5 @@
 ---
 # play these tasks for ALL jitsi nodes
-#- name: Install gtar
-#  apt: name=gtar state=latest update_cache=yes
     
 
 # https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
@@ -40,6 +38,9 @@
     - jibri_xmpp_password
   loop_control:
     index_var: my_idx
+    
+- name: Create config directories
+  include: create_config_directories.yml
   
   # TODO chenge that shit - doesn't work properly
 - name: Creating directories
