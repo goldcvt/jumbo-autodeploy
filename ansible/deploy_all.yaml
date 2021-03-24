@@ -1,2 +1,0 @@
-- import_playbook: install_docker.yaml
-- import_playbook: install_rocketchat.yaml

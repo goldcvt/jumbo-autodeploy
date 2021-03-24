@@ -1,0 +1,6 @@
+---
+become: true
+become_method: sudo
+
+roles:
+  - name: install-docker
