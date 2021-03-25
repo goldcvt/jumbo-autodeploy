@@ -1,4 +1,13 @@
 ---
+- name: Deploy first swarm node
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ ansible_default_ipv4.address }}"
+    debug: yes
+  register: swarm_info
+  run_once: true
+  delegate_to: "{{ groups['docker-swarm'][0] }}"
+
 - name: gather tokens from bootstrapped swarm
   docker_swarm_info:
     nodes: yes
