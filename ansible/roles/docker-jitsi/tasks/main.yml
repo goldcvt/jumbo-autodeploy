@@ -43,7 +43,7 @@
   # TODO add different networks to load balance the meet servers
 - name: Create overlay network for jitsi
   docker_network:
-    name: "meet.jitsi"
+    name: meet.jitsi
     driver: overlay
   run_once: true
   delegate_to: "{{ groups['docker-swarm'][0] }}" # delegating netwotk creation to the first master node. Idk if it will show up on all hosts
