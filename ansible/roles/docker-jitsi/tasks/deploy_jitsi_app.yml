@@ -14,10 +14,11 @@
     src: 10-config.j2
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/prosody/rootfs/etc/cont-init.d/10-config"
 
+# Unfortunately, you can't build with docker stack, so we'll use compose temporarily. Because we actually need to change prosody config somehow... 
 - name: Deploy jitsi web stack
-  docker_stack:
-    name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
-    resolve_image: never
-    with_registry_auth: yes
-    compose:
-      - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
+  #docker_stack:
+  #  name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
+  #  resolve_image: never
+  #  with_registry_auth: yes
+  #  compose:
+  #    - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
