@@ -1,4 +1,4 @@
-# is it ok to join for the second time?
+---
 - name: Add swarm masters to bootstrapped cluster
   docker_swarm:
     state: join
