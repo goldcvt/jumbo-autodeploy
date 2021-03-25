@@ -30,10 +30,10 @@ services:
     #    depends_on:
     #        - prosody
         networks:
-            meet.jitsi:
+            meet_jitsi:
                 aliases:
                     - ${JVB_AUTH_USER}.${XMPP_DOMAIN}
                     
 # Custom network so all services can communicate using a FQDN
 networks:
-    meet.jitsi:
+    meet_jitsi:
