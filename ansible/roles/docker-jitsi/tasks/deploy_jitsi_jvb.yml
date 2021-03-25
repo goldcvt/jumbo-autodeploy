@@ -1,22 +1,14 @@
 ---
-- name: Replace docker-compose.yml
-  copy:
-    src: jvb-docker-compose.yml
-    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
-  
 - name: Replace .env file
   template:
     src: .env.j2
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env"
     
-  
-- name: Run jvb containers via docker-compose
-  #command: cd {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1 && docker-compose up -d
-  docker_compose:
-    recreate: smart
-    project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
-    files: docker-compose.yml
-    project_name: jitsi
+- name: Create jvb service on a given machine
+  docker_swarm_service:
+    name: jvb-{{  }}
+    
+    
   
   
   
