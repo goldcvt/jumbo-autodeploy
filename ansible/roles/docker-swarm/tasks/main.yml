@@ -10,15 +10,8 @@
   run_once: true
   delegate_to: "{{ groups['docker-swarm'][0] }}"
 
-- name: Deploy first swarm node
-  docker_swarm:
-    state: present
-    advertise_addr: "{{ ansible_default_ipv4.address }}"
-    debug: yes
-  register: swarm_info
-  run_once: true
-  delegate_to: "{{ groups['docker-swarm'][0] }}"
-  when: swarm_info.docker_swarm_active == false or swarm_info.docker_swarm_active is not defined
+# deploy first swarm node
+#  when: swarm_info.docker_swarm_active == false or swarm_info.docker_swarm_active is not defined
 
 - include_tasks: deploy_nodes.yml
-  when: cert_results is changed or key_results is changed
+  when: swarm_info.docker_swarm_active == false or swarm_info.docker_swarm_active is not defined
