@@ -2,12 +2,61 @@
 - name: Replace .env file
   template:
     src: .env.j2
-    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/.env"
+    dest: /home/{{ ansible_user }}/.env
     
 - name: Create jvb service on a given machine
   docker_swarm_service:
-    name: jvb-{{  }}
+    name: jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
+    image: jitsi/jvb:stable-5390-1
     
+    mounts:
+      type: volume
+      source: "${CONFIG}/jvb"
+      target: /config
+      
+    publish:
+      -
+        mode: ingress
+        protocol: tcp
+        published_port: "${JVB_TCP_PORT}"
+        target_port: "${JVB_TCP_PORT}"
+      -
+        mode: ingress
+        protocol: udp
+        published_port: 4096
+        target_port: 4096
+      
+      -
+        mode: ingress
+        protocol: udp
+        published_port: "${JVB_PORT}"
+        target_port: "${JVB_PORT}"
+      
+    #args:
+    #configs:
+    #  config_id: jvb.conf
+    #  config_name: jvb.conf
+    env_files:
+      - .env
+    networks:
+      - name: "meet.jitsi"
+        aliases:
+          - "${JVB_AUTH_USER}.${XMPP_DOMAIN}"
+          
+    stop_grace_period: 30s
+    restart_config:
+      condition: none
+    rollback_config:
+      delay: 5s
+      failure_action: pause
+      max_failure_ratio: 0.0
+      parallelism: 0
+    update_config:
+      failure_action: rollback
+      max_failure_ratio: 0.0
+      monitor: 1m30s
+      
+      
     
   
   
