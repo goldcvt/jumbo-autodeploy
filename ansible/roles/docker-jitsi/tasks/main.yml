@@ -38,7 +38,8 @@
     - jibri_xmpp_password
   loop_control:
     index_var: my_idx
-    
+  
+  # TODO add different networks to load balance the meet servers
 - name: Create overlay network for jitsi
   docker_network:
     name: "meet.jitsi"
