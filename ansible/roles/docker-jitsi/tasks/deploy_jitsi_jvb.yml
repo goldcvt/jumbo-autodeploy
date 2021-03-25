@@ -10,9 +10,10 @@
     image: jitsi/jvb:stable-5390-1
     
     mounts:
-      type: volume
-      source: "${CONFIG}/jvb"
-      target: /config
+      -
+        type: volume
+        source: "${CONFIG}/jvb"
+        target: /config
       
     publish:
       -
