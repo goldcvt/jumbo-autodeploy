@@ -1,5 +1,4 @@
 ---
-
 - name: Replace docker-compose.yml
   copy:
     src: main-docker-compose.yml
@@ -15,10 +14,10 @@
     src: 10-config.j2
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/prosody/rootfs/etc/cont-init.d/10-config"
 
-- name: Run jitsi-app containers via docker-compose
-  # command: cd {{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1 && docker-compose up -d
-  docker_compose:
-    recreate: smart
-    project_src:  "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
-    files: docker-compose.yml
-    project_name: jitsi
+- name: Deploy jitsi web stack
+  docker_stack:
+    name: Jitsi Web Stack {{ groups['jitsi-app'].index(inventory_hostname) }}
+    resolve_image: never
+    with_registry_auth: yes
+    compose:
+      - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
