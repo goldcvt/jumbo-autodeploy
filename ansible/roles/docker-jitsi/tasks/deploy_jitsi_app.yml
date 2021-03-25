@@ -15,21 +15,28 @@
     dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/prosody/rootfs/etc/cont-init.d/10-config"
   
 # Build and push?.. We can't build locally once because no changes will be present in the config since we use templates
-- name: Build prosody
-  docker_image:
-      build:
-      path: ./sinatra
-    name: hub.docker.com/repository/docker/goldcvt/prosody
-    tag: stable-5390-1
-    push: yes
-    source: build
+#- name: Build prosody
+#  docker_image:
+#      build:
+#      path: ./prosody
+#    name: hub.docker.com/repository/docker/goldcvt/prosody
+#    tag: stable-5390-1
+#    push: yes
+#    source: build
 
-# Unfortunately, you can't build with docker stack, so we'll use compose temporarily. Because we actually need to change prosody config somehow...
-# Actually, we could just run prosodyctl inside of the container later on. But building prior to that is simpler
+# Actually, we could just run prosodyctl inside of the container later on. But we'll just use compose to debug & for convenience
 - name: Deploy jitsi web stack
-  docker_stack:
-    name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
-    resolve_image: never
-    with_registry_auth: yes
-    compose:
-      - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
+  docker_compose:
+    # do something
+#  docker_stack:
+#    name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
+#    resolve_image: never
+#    with_registry_auth: yes
+#    compose:
+#      - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
+      
+#- name: Authorize jvbs in prosody
+#  docker:
+#    docker_extra_args:
+#    remote_address: 
+#    remote_user: root
