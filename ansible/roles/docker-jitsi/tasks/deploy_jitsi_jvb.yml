@@ -39,7 +39,8 @@
     env_files:
       - .env
     networks:
-      - name: meet.jitsi
+      - name: meet_jitsi
+        external: true
         aliases:
           - "${JVB_AUTH_USER}.${XMPP_DOMAIN}"
           
