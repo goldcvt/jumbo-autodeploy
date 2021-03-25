@@ -7,7 +7,7 @@
     nodes: yes
   register: swarm_info
   run_once: true
-  delegate_to: "{{ groups.docker-swarm[0] }}"
+  delegate_to: "{{ groups['docker-swarm'][0] }}"
 
 - name: Deploy first swarm node
   docker_swarm:
@@ -16,7 +16,7 @@
     debug: yes
   register: swarm_info
   run_once: true
-  delegate_to: "{{ groups.docker-swarm[0] }}"
+  delegate_to: "{{ groups['docker-swarm'][0] }}"
   when: swarm_info.docker_swarm_active == false or swarm_info.docker_swarm_active is not defined
 
 - name: gather tokens from bootstrapped swarm
@@ -24,14 +24,14 @@
     nodes: yes
   register: swarm_info
   run_once: true
-  delegate_to: "{{ groups.docker-swarm[0] }}"
+  delegate_to: "{{ groups['docker-swarm'][0] }}"
 
 # is it ok to join for the second time?
 - name: Add swarm masters to bootstrapped cluster
   docker_swarm:
     state: join
     debug: yes
-    remote_addrs: "{{ hostvars[groups.docker-swarm[0]]['ansible_default_ipv4']['address'] }}"
+    remote_addrs: "{{ hostvars[groups['docker-swarm'][0]]['ansible_default_ipv4']['address'] }}"
     join_token: "{{ swarm_info.swarm_facts.JoinTokens.Manager }}"
     advertise_addr: "{{ ansible_default_ipv4.address }}"
   when: swarm_master is defined and swarm_master|bool == True
@@ -39,7 +39,7 @@
 - name: Add other swarm workers to bootstrapped cluster
   docker_swarm:
     state: join
-    remote_addrs: "{{ hostvars[groups.docker-swarm[0]]['ansible_default_ipv4']['address'] }}"
+    remote_addrs: "{{ hostvars[groups['docker-swarm'][0]]['ansible_default_ipv4']['address'] }}"
     join_token: "{{ swarm_info.swarm_facts.JoinTokens.Worker }}"
     advertise_addr: "{{ ansible_default_ipv4.address }}"
   when: swarm_master is not defined
