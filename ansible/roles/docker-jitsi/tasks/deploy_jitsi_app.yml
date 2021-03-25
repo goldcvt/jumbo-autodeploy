@@ -16,7 +16,7 @@
 
 - name: Deploy jitsi web stack
   docker_stack:
-    name: Jitsi Web Stack {{ groups['jitsi-app'].index(inventory_hostname) }}
+    name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
     resolve_image: never
     with_registry_auth: yes
     compose:
