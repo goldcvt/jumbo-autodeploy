@@ -103,7 +103,7 @@ services:
 
     # XMPP server
     prosody:
-        image: goldcvt/prosody:stable-5390-1
+        image: jitsi/prosody:stable-5390-1
         restart: ${RESTART_POLICY}
         expose:
             - '5222'
