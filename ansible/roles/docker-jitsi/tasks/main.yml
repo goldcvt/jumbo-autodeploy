@@ -16,7 +16,7 @@
     remote_src: yes
     src: https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
     dest: "{{ jitsi_installation_folder }}"
-  when: "{{ inventory_hostname }} in groups.jitsi-app" 
+  when: "{{ inventory_hostname }} in groups['jitsi-app']" 
  
  
   # WARNING: SOME REALLY BAD (BUT CLEVER) CODE (OR WHATEVER) AHEAD
