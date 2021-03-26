@@ -11,14 +11,14 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-# only runs for app machines
+# should only run for app machines when using jvb as a docker service
 - name: Download & extract archive (version is hardcoded!)
   unarchive:
     remote_src: yes
     src: https://github.com/jitsi/docker-jitsi-meet/archive/refs/tags/stable-5390-1.tar.gz
     dest: "{{ jitsi_installation_folder }}"
-  delegate_to: "{{ item }}"
-  loop: "{{ groups['jitsi-app'] }}"
+  #delegate_to: "{{ item }}"
+  #loop: "{{ groups['jitsi-app'] }}"
  
  
   # WARNING: SOME REALLY BAD (BUT CLEVER) CODE (OR WHATEVER) AHEAD
