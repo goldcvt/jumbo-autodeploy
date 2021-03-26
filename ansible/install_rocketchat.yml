@@ -1,0 +1,36 @@
+---
+# Deploy mongo nodes if they are absent
+- hosts: rocketchat-mongodb
+  become: true
+  become_method: sudo
+  
+  tasks:
+    - name: Check that mongos exist
+      docker_container_info: 
+        name: "mongodb"
+      register: mongo
+      run_once: true
+       
+    - name: Looking at gathered info...
+      debug:
+        msg: "Looks like MongoDB setup exists, will skip installation"
+      when: mongo.exists
+      
+    - name: Setup mongodb if absent
+      include_role:
+        name: docker-mongo
+      when: not mongo.exists
+
+- hosts: rocketchat-app
+  become: true
+  
+  roles:
+    - role: docker-rocketchat
+      tags:
+        - "never"
+        - "no-balancer"
+      
+    - role: scaling-docker-rocketchat
+      tags:
+        - "never"
+        - "balancer"
