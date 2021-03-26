@@ -19,8 +19,9 @@
       -
         mode: ingress
         protocol: tcp
-        published_port: "${ #toInt(JVB_TCP_PORT) }"
-        target_port: "${ #toInt(JVB_TCP_PORT) }"
+        # JVB_TCP_PORT
+        published_port: 4443
+        target_port: 4443
       -
         mode: ingress
         protocol: udp
@@ -30,8 +31,9 @@
       -
         mode: ingress
         protocol: udp
-        published_port: "${ #toInt(JVB_PORT) }"
-        target_port: "${ #toInt(JVB_PORT) }"
+        # JVB PORT
+        published_port: 10000 
+        target_port: 10000
       
     #args:
     #configs:
