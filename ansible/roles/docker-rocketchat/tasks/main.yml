@@ -1,0 +1,83 @@
+---
+- name: Pull rocket.chat, NGINX, nginx-proxy-companion from dockerhub
+  docker_image: 
+    name: "{{ item }}"
+    source: pull
+  loop: 
+    - "rocketchat/rocket.chat:{{ rocketchat_tag }}"
+    - "jwilder/nginx-proxy:{{ jwilder_nginx_tag }}"
+    - "jrcs/letsencrypt-nginx-proxy-companion:{{ le_companion_tag }}"
+
+- name: Create directory for NGINX configs
+  file:
+    path: /opt/nginx-config
+    state: directory
+    mode: 0775
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+# Use variable for domain name and template for config. IP can be retrieved via ansible variable
+- name: Create config for NGINX
+  template:
+    src: rocketchat-nginx-filesize.conf.j2
+    dest: /opt/nginx-config/filesize.conf
+    owner: root
+    group: root
+    mode: 0644
+
+# --mount/-v --network
+- name: Run NGINX with all of the needed stuff
+  docker_container:
+    state: started
+    name: "proxy"
+    # env: 
+    image: "jwilder/nginx-proxy:{{ jwilder_nginx_tag }}"
+    detach: yes
+    volumes: 
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - /opt/nginx-config/filesize.conf:/etc/nginx/conf.d/default_filesize.conf:ro
+      - webroot:/usr/share/nginx/html
+    #networks:
+    #  - name: proxy-net
+    published_ports:
+      - "80:80"
+      - "443:443"
+    restart_policy: always
+
+
+- name: Run nginx-proxy-companion with all of the needed stuff
+  docker_container:
+    state: started
+    name: "proxy_companion"
+    image: "jrcs/letsencrypt-nginx-proxy-companion:{{ le_companion_tag }}"
+    env: 
+      DEFAULT_EMAIL: "{{ le_email | default(omit) }}"
+    detach: yes
+    volumes_from: [ "proxy" ]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+    restart_policy: always
+    
+# TODO how to connect to remote MongoDB servers?
+- name: Run (x) Rocket.Chats with all of the needed stuff
+  docker_container:
+    state: started
+    name: "rocketchat_{{ item|int }}"
+    image: "rocketchat/rocket.chat:{{ rocketchat_tag }}"
+    exposed_ports:
+      - "{{ 2999 + item|int }}"
+    recreate: yes
+    env:
+      PORT: "{{ 2999 + item|int }}"
+      ROOT_URL: "https://chat.{{ domain }}"
+      VIRTUAL_HOST: "chat.{{ domain }}"
+      VIRTUAL_PORT: "{{ 2999 + item|int }}"
+      LETSENCRYPT_HOST: "chat.{{ domain }}"
+      MONGO_URL: "mongodb://{{ rc_user | default('rocketchat') }}:{{ rc_password | default('rocketchat') }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][1]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][2]].ansible_host }}:27017/rocketchat?authSource=rocketchat&replicaSet=rs0&w=majority"
+      MONGO_OPLOG_URL: "mongodb://{{ rc_oplog_user | default('oploguser') }}:{{ rc_oplog_password | default('AdwA3D6dgw') }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][1]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][2]].ansible_host }}:27017/local?replicaSet=rs0&authSource=rocketchat"
+    detach: yes
+    restart_policy: always
+  with_sequence: start=1 end="{{ rc_quantity|int }}"
