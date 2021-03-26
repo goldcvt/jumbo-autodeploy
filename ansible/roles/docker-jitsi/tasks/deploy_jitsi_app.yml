@@ -29,7 +29,8 @@
   docker_compose:
     project_src: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
     project_name: jitsi
-    files: docker-compose.yml
+    files: 
+      - docker-compose.yml
     state: present
     stopped: no
     # do something
