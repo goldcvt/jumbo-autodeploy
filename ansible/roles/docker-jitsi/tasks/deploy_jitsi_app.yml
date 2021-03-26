@@ -27,6 +27,11 @@
 # Actually, we could just run prosodyctl inside of the container later on. But we'll just use compose to debug & for convenience
 - name: Deploy jitsi web stack
   docker_compose:
+    project_src: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
+    project_name: jitsi
+    files: docker-compose.yml
+    state: present
+    stopped: no
     # do something
 #  docker_stack:
 #    name: jitsi-web-{{ groups['jitsi-app'].index(inventory_hostname) }}
