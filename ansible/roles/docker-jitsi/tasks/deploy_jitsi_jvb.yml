@@ -12,7 +12,8 @@
     mounts:
       -
         type: volume
-        source: "${CONFIG}/jvb"
+        # ${CONFIG}/jvb. Actually, you can use docker configs instead of hardcoding
+        source: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jvb"
         target: /config
       
     publish:
@@ -44,7 +45,8 @@
     networks:
       - name: meet_jitsi
         aliases:
-          - "${JVB_AUTH_USER}.${XMPP_DOMAIN}"
+          - "JVB{{ groups['jitsi-jvb'].index(inventory_hostname) }}.meet.jitsi" 
+          #"${JVB_AUTH_USER}.${XMPP_DOMAIN}"
           
     stop_grace_period: 30s
     restart_config:
