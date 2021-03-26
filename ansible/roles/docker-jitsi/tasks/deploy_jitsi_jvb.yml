@@ -30,7 +30,7 @@
       -
         mode: ingress
         protocol: udp
-        published_port:"${ #toInt(JVB_PORT) }"
+        published_port: "${ #toInt(JVB_PORT) }"
         target_port: "${ #toInt(JVB_PORT) }"
       
     #args:
