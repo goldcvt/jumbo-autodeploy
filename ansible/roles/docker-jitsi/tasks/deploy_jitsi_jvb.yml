@@ -1,63 +1,76 @@
 ---
+- name: Replace docker-compose.yml
+  copy:
+    src: jvb-docker-compose.yml
+    dest: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
+    
 - name: Replace .env file
   template:
     src: .env.j2
     dest: /home/{{ ansible_user }}/.env
     
-- name: Create jvb service on a given machine
-  docker_swarm_service:
-    name: jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
-    image: jitsi/jvb:stable-5390-1
-    
-    mounts:
-      -
-        type: volume
-        # ${CONFIG}/jvb. Actually, you can use docker configs instead of hardcoding
-        source: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jvb"
-        target: /config
-      
-    publish:
-      -
-        mode: ingress
-        protocol: tcp
-        # JVB_TCP_PORT
-        published_port: 4443
-        target_port: 4443
-      -
-        mode: ingress
-        protocol: udp
-        published_port: 4096
-        target_port: 4096
-      
-      -
-        mode: ingress
-        protocol: udp
-        # JVB PORT
-        published_port: 10000 
-        target_port: 10000
-      
-    #args:
-    #configs:
-    #  config_id: jvb.conf
-    #  config_name: jvb.conf
-    env_files:
-      - .env
-    networks:
-      - name: meet_jitsi
-        aliases:
-          - "JVB{{ groups['jitsi-jvb'].index(inventory_hostname) }}.meet.jitsi" 
+- name: Deploy jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
+  docker_compose:
+    project_src: "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1"
+    project_name: jvb
+    files: 
+      - docker-compose.yml
+    state: present
+    stopped: no
+#- name: Create jvb service on a given machine
+#  docker_swarm_service:
+#    name: jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
+#    image: jitsi/jvb:stable-5390-1
+#    
+#    mounts:
+#      -
+#        type: volume
+#        # ${CONFIG}/jvb. Actually, you can use docker configs instead of hardcoding
+#        source: "{{ jitsi_installation_folder }}/.jitsi-meet-cfg/jvb"
+#        target: /config
+#      
+#    publish:
+#      -
+#        mode: ingress
+#        protocol: tcp
+#        # JVB_TCP_PORT
+#        published_port: 4443
+#        target_port: 4443
+#      -
+#        mode: ingress
+#        protocol: udp
+#        published_port: 4096
+#        target_port: 4096
+#      
+#      -
+#        mode: ingress
+#        protocol: udp
+#        # JVB PORT
+#        published_port: 10000 
+#        target_port: 10000
+#      
+#    #args:
+#    #configs:
+#    #  config_id: jvb.conf
+#    #  config_name: jvb.conf
+#    env_files:
+#      - .env
+#    networks:
+#      - name: meet_jitsi
+#        aliases:
+#          - "JVB{{ groups['jitsi-jvb'].index(inventory_hostname) }}.meet.jitsi" 
           #"${JVB_AUTH_USER}.${XMPP_DOMAIN}"
           
-    stop_grace_period: 30s
-    restart_config:
-      condition: none
-    rollback_config:
-      delay: 5s
-      failure_action: pause
-      max_failure_ratio: 0.0
-      parallelism: 0
-    update_config:
-      failure_action: rollback
-      max_failure_ratio: 0.0
-      monitor: 1m30s
+#    stop_grace_period: 30s
+#    restart_config:
+#      condition: none
+#    rollback_config:
+#      delay: 5s
+#      failure_action: pause
+#      max_failure_ratio: 0.0
+#      parallelism: 0
+#    update_config:
+#      failure_action: rollback
+#      max_failure_ratio: 0.0
+#      monitor: 1m30s
       
