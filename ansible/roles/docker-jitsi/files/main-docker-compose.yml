@@ -3,7 +3,6 @@ version: '3'
 services:
     # Frontend
     web:
-        command: --debug
         image: jitsi/web:stable-5390-1
         restart: ${RESTART_POLICY}
         ports:
