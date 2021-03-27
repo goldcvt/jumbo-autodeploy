@@ -19,7 +19,7 @@
     - name: Setup mongodb if absent
       include_role:
         name: docker-mongo
-      when: not mongo.exists
+      when: not mongo.exists or mongo is not defined
 
 - hosts: rocketchat-app
   become: true
