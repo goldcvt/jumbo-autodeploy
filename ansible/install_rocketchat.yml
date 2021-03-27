@@ -11,16 +11,27 @@
       register: mongo
       run_once: true
       ignore_errors: yes
+    
+    - name: No docker, huh?
+      set_fact: docker_present=false
+      when: "'Failed' in mongo.stderr"
        
     - name: Looking at gathered info...
       debug:
         msg: "Looks like MongoDB setup exists, will skip installation"
-      when: mongo.exists or mongo.exists is defined
+      when: mongo.exists or mongo.exists is undefined
+      ignore_errors: true
       
     - name: Setup mongodb if absent
       include_role:
         name: docker-mongo
-      when: not mongo.exists or mongo.exists is not defined
+      when: not mongo.exists
+      ignore_errors: true
+      
+    - name: Setup mongodb and docker
+      include_role:
+        name: docker-mongo
+      when: not docker_present
 
 - hosts: rocketchat-app
   become: true
