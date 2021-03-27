@@ -5,6 +5,8 @@
   docker_image:
     name: mongo
     tag: "{{ mongo_version }}"
+    source: pull
+    state: present
 
 - name: ensure {{ mongodb_host_dir }} exists
   file:
