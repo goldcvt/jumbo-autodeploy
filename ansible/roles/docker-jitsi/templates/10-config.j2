@@ -50,7 +50,7 @@ if [[ "$JVB_AUTH_PASSWORD" == "$OLD_JVB_AUTH_PASSWORD" ]]; then
 fi
 
 {% for host in groups['jitsi-jvb'] %}
-prosodyctl --config $PROSODY_CFG register JVB{{ loop.index - 1 }} $XMPP_AUTH_DOMAIN $JVB_AUTH_PASSWORD
+prosodyctl --config $PROSODY_CFG register jvb{{ loop.index - 1 }} $XMPP_AUTH_DOMAIN $JVB_AUTH_PASSWORD
 {%- if loop.last %} {%- elif loop %},
 {% endif %}
 {% endfor %}
