@@ -17,6 +17,15 @@
       - docker-compose.yml
     state: present
     stopped: no
+    
+#- name:  Deploy jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
+#  docker_stack:
+#    name: jitsi-jvb-{{ groups['jitsi-app'].index(inventory_hostname) }}
+#    resolve_image: never
+#    with_registry_auth: yes
+#    compose:
+#      - "{{ jitsi_installation_folder }}/docker-jitsi-meet-stable-5390-1/docker-compose.yml"
+
 #- name: Create jvb service on a given machine
 #  docker_swarm_service:
 #    name: jvb-{{  groups['jitsi-jvb'].index(inventory_hostname) }}
