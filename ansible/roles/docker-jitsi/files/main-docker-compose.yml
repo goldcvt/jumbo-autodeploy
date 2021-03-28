@@ -103,8 +103,8 @@ services:
 
     # XMPP server
     prosody:
-        # image: jitsi/prosody:stable-5390-1
-        build: ./prosody
+        image: jitsi/prosody:stable-5390-1
+        # build: ./prosody
         restart: ${RESTART_POLICY}
         expose:
             - '5222'
