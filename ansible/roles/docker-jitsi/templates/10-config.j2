@@ -51,7 +51,7 @@ fi
 
 {% for host in groups['jitsi-jvb'] %}
 prosodyctl --config $PROSODY_CFG register jvb{{ loop.index - 1 }} $XMPP_AUTH_DOMAIN $JVB_AUTH_PASSWORD
-{%- if loop.last %} {%- elif loop %},
+{%- if loop.last %} {%- elif loop %}
 {% endif %}
 {% endfor %}
 
