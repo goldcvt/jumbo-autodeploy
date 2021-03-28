@@ -1,3 +1,4 @@
 jitsi_installation_folder: /opt/docker-jitsi
 my_email: "example@une.co"
+domain_prefix: chat2
 # jvb_quantity: 3
