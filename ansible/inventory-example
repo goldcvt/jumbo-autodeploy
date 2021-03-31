@@ -23,7 +23,7 @@ mongo3.uneco.online             ansible_host=10.0.0.x         ansible_connection
 10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
 
 [jitsi-app]
-10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         external_ip=87.239.109.61
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         external_ip=88.228.133.7
 
 [jitsi-jvb]
 10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         swarm_master="True"
