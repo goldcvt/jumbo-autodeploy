@@ -1,19 +1,35 @@
 [rocketchat]
+10.0.0.x                                                      ansible_connection=ssh        ansible_user=ubuntu
+10.0.0.x                                                      ansible_connection=ssh        ansible_user=ubuntu
+10.0.0.x                                                      ansible_connection=ssh        ansible_user=ubuntu
+mongo1.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
+mongo2.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
+mongo3.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
 
 [rocketchat-mongodb]
+mongo1.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
+mongo2.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
+mongo3.uneco.online             ansible_host=10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
 
 [rocketchat-app]
+10.0.0.x        ansible_connection=ssh        ansible_user=ubuntu
+10.0.0.x        ansible_connection=ssh        ansible_user=ubuntu
+10.0.0.x        ansible_connection=ssh        ansible_user=ubuntu
+
 
 [jitsi]
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         external_ip=88.228.133.7
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu
 
 [jitsi-app]
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         external_ip=87.239.109.61
 
 [jitsi-jvb]
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         swarm_master="True"
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         swarm_master="True"
 
-[nextcloud]
-
-[nextcloud-app]
-
-[nextcloud-sql]
-
-[nextcloud-redis]
+[docker-swarm]
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         swarm_master="True"
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         external_ip=88.228.133.7    swarm_master="True"
+10.0.0.x         ansible_connection=ssh        ansible_user=ubuntu         swarm_master="True"
