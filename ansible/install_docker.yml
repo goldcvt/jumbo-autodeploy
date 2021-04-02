@@ -4,3 +4,10 @@
 
   roles:
     - name: install-docker
+
+
+- hosts: docker-swarm
+  become: true
+  
+  roles:
+    - name: docker-swarm
