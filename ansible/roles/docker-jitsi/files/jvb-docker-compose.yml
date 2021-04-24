@@ -27,8 +27,7 @@ services:
             - JVB_OCTO_BIND_PORT
             - JVB_OCTO_REGION
             - TZ
-    #    depends_on:
-    #        - prosody
+        restart: always
         networks:
             meet_jitsi:
                 aliases:
