@@ -65,12 +65,12 @@
   docker_container:
     state: started
     name: "smtp"
-    image: "namshi/smtp:{{ namshi_smtp_tag }}"
+    image: "namshi/smtp:latest"
     detach: yes
     restart_policy: always
     
 # TODO how to connect to remote MongoDB servers?
-- name: Run (x) Rocket.Chats with all of the needed stuff
+- name: Run x Rocket.Chats with all of the needed stuff
   docker_container:
     state: started
     name: "rocketchat_{{ item|int }}"
