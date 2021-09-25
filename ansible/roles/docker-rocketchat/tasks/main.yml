@@ -66,7 +66,7 @@
   docker_container:
     state: started
     name: "smtp"
-    image: "namshi/smtp:latest"
+    image: namshi/smtp:latest
     detach: yes
     restart_policy: always
 
