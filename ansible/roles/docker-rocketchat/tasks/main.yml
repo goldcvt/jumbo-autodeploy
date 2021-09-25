@@ -88,4 +88,4 @@
       MONGO_OPLOG_URL: "mongodb://{{ rc_oplog_user | default('oploguser') }}:{{ rc_oplog_password | default('AdwA3D6dgw') }}@{{ hostvars[groups['rocketchat-mongodb'][0]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][1]].ansible_host }}:27017,{{ hostvars[groups['rocketchat-mongodb'][2]].ansible_host }}:27017/local?replicaSet=rs0&authSource=rocketchat"
     detach: yes
     restart_policy: always
-  with_sequence: start=1 end="{{ rc_quantity|int }}"
+  with_sequence: "start=0 end={{ rc_quantity|int }}"
